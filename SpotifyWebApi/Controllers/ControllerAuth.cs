@@ -19,8 +19,10 @@ namespace SpotifyWebApi.Controllers
         public async Task <string> Index(string code, string state)
         {
             var token = await Token.getToken(Constants.grant_type,code,Constants.redirectUri);
+            var temp1 = token.refresh_token;
+            var test = await AuthorizationCodeFlow.RefreshToken(temp1);
             var temp = "tutto ok";
-            return temp;
+            return test;
         }
 
     }

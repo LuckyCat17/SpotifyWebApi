@@ -5,6 +5,7 @@ namespace SpotifyWebApi
 {
     public static class AuthorizationCodeFlow
     {
+
         public static async Task<Uri> RequestUserAuth()
         {
             using (var client = new HttpClient())
@@ -23,5 +24,26 @@ namespace SpotifyWebApi
                    }
             }
         }
+
+        public static async Task<string> RefreshToken(string refresh_token)
+        {
+            using (var client = new HttpClient())
+            {
+                var Body = new Dictionary<string, string>
+                {
+                    {"grant_type", "refresh_token" },
+                    { "refresh_token", refresh_token }
+                };
+                var Auth = Utility.Base64Encode(Constants.ClientId + ":" + Constants.clientSecret);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Auth);
+                var content = new FormUrlEncodedContent(Body);
+                var response = await client.PostAsync("https://accounts.spotify.com/api/token",content);
+                var responseString = await response.Content.ReadAsStringAsync();
+                return responseString;
+            }   
+        }
+
+
+
     }
 }
