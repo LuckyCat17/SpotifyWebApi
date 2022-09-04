@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using SpotifyWebApi.Models;
+using System.Text;
 
 namespace SpotifyWebApi
 {
@@ -29,6 +30,19 @@ namespace SpotifyWebApi
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);
         }
+
+        //public static bool checkToken(Token token)
+        //{
+        //    var flag = false;
+        //    var startTimeSpan = TimeSpan.Zero;
+        //    var periodTimeSpawn = TimeSpan.FromMinutes(5);
+        //    var timer = new System.Threading.Timer((e) =>
+        //    {
+        //         flag = isExpired(token);
+        //   }, null, startTimeSpan, periodTimeSpawn
+        //    );
+        //    return flag;
+        //}
 
     }
 }

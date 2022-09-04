@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using SpotifyWebApi.Models;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace SpotifyWebApi
 
@@ -18,14 +20,15 @@ namespace SpotifyWebApi
                 {
                     var temp = response.RequestMessage.RequestUri;
                     return temp;
-                } else
-                  {
+                }
+                else
+                {
                     return null;
-                   }
+                }
             }
         }
 
-        public static async Task<string> RefreshToken(string refresh_token)
+        public static async Task<Token> RefreshToken(string refresh_token)
         {
             using (var client = new HttpClient())
             {
@@ -39,11 +42,9 @@ namespace SpotifyWebApi
                 var content = new FormUrlEncodedContent(Body);
                 var response = await client.PostAsync("https://accounts.spotify.com/api/token",content);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return responseString;
+                var token = JsonSerializer.Deserialize<Token>(responseString);
+                return token;
             }   
         }
-
-
-
     }
 }

@@ -27,5 +27,9 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "TokenConnStr": "Data Source=(LocalDb)\\LocalDB;Initial Catalog=master;Integrated Security=True"
   }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SpotifyWebApi.DBContext;
 using SpotifyWebApi.Models;
 
 namespace SpotifyWebApi.Controllers
@@ -7,6 +8,16 @@ namespace SpotifyWebApi.Controllers
     [ApiController]
     public class ControllerAuth : Controller
     {
+
+        public static Token token = null;
+        private readonly TokenDBContext _context;
+        public ControllerAuth(TokenDBContext dbContext)
+        {
+            _context = dbContext;
+        }
+
+
+
         [HttpGet]
         public async Task<RedirectResult> GetAuth()
         {
@@ -18,11 +29,11 @@ namespace SpotifyWebApi.Controllers
         [Route("callback")]
         public async Task <string> Index(string code, string state)
         {
-            var token = await Token.getToken(Constants.grant_type,code,Constants.redirectUri);
-            var temp1 = token.refresh_token;
-            var test = await AuthorizationCodeFlow.RefreshToken(temp1);
-            var temp = "tutto ok";
-            return test;
+            token = await Token.getToken(Constants.grant_type,code,Constants.redirectUri);
+            _context.Tokens.Add(token);
+            await _context.SaveChangesAsync();
+            var temp = Token.isExpired(token);
+            return "Added";
         }
 
     }
