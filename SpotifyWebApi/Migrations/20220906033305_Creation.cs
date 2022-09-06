@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace SpotifyWebApi.Migrations
 {
-    public partial class MigrationV1 : Migration
+    public partial class Creation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +19,9 @@ namespace SpotifyWebApi.Migrations
                     token_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     scope = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     expires_in = table.Column<int>(type: "int", nullable: false),
-                    refresh_token = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    refresh_token = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    is_expired = table.Column<bool>(type: "bit", nullable: false),
+                    generated = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

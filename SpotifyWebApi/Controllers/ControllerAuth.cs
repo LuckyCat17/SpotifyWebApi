@@ -8,8 +8,6 @@ namespace SpotifyWebApi.Controllers
     [ApiController]
     public class ControllerAuth : Controller
     {
-
-        public static Token token = null;
         private readonly TokenDBContext _context;
         public ControllerAuth(TokenDBContext dbContext)
         {
@@ -29,10 +27,9 @@ namespace SpotifyWebApi.Controllers
         [Route("callback")]
         public async Task <string> Index(string code, string state)
         {
-            token = await Token.getToken(Constants.grant_type,code,Constants.redirectUri);
+            var token = await Token.getToken(Constants.grant_type,code,Constants.redirectUri);
             _context.Tokens.Add(token);
             await _context.SaveChangesAsync();
-            var temp = Token.isExpired(token);
             return "Added";
         }
 

@@ -16,13 +16,13 @@ namespace SpotifyWebApi.Models
         public string token_type { get; set; }
         public string scope { get; set; }
         public int expires_in { get; set; }
-        public string refresh_token { get; set; }
+        public string? refresh_token { get; set; }
         public bool is_expired { get; set; }
         public DateTime generated { get; set; }
 
         public Token()
         {
-            generated = new DateTime(2022, 09, 03, 16, 47, 45);
+            generated = new DateTime();
             is_expired = false;
         }
 
@@ -65,8 +65,9 @@ namespace SpotifyWebApi.Models
 
         public static bool isExpired(Token token)
         {
-            var temp = token.generated.AddSeconds(3600);
-            if (token.generated >= temp)
+            var localTime = DateTime.Now;
+            var tokenExpiredTime = token.generated.AddSeconds(3600);
+            if (localTime >= tokenExpiredTime)
             {
                 return true;
             }
@@ -75,6 +76,25 @@ namespace SpotifyWebApi.Models
                 return false;
             }
 
+        }
+
+        public static async Task<Token> refreshTokenMethod(string refresh_token)
+        {
+            using (var client = new HttpClient())
+            {
+                var Body = new Dictionary<string, string>
+                {
+                    {"grant_type", "refresh_token" },
+                    { "refresh_token", refresh_token }
+                };
+                var Auth = Utility.Base64Encode(Constants.ClientId + ":" + Constants.clientSecret);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Auth);
+                var content = new FormUrlEncodedContent(Body);
+                var response = await client.PostAsync("https://accounts.spotify.com/api/token", content);
+                var responseString = await response.Content.ReadAsStringAsync();
+                var token = JsonSerializer.Deserialize<Token>(responseString);
+                return token;
+            }
         }
 
 

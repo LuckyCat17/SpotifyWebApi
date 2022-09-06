@@ -37,14 +37,13 @@ namespace SpotifyWebApi.Migrations
                     b.Property<int>("expires_in")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("genereted")
+                    b.Property<DateTime>("generated")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("is_expired")
                         .HasColumnType("bit");
 
                     b.Property<string>("refresh_token")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("scope")
