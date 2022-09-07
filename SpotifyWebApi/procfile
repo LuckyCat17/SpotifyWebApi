@@ -1,1 +1,1 @@
-web:bin\Debug\net6.0\SpotifyWebApi.exe
+web: dotnet run
