@@ -14,8 +14,6 @@ namespace SpotifyWebApi.Controllers
             _context = dbContext;
         }
 
-
-
         [HttpGet]
         public async Task<RedirectResult> GetAuth()
         {
@@ -25,13 +23,16 @@ namespace SpotifyWebApi.Controllers
 
         [HttpGet]
         [Route("callback")]
-        public async Task <string> Index(string code, string state)
+        public async Task <HttpResponseMessage> Index(string code, string state)
         {
             var token = await Token.getToken(Constants.grant_type,code,Constants.redirectUri);
             _context.Tokens.Add(token);
             await _context.SaveChangesAsync();
-            return "Added";
+            var message = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+            {
+                ReasonPhrase = "Token registrato con successo"
+            };
+            return message;
         }
-
     }
 }

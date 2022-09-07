@@ -21,20 +21,27 @@ namespace SpotifyWebApi.Controllers
 
         [HttpPost]
         [Route("AddItem")]
-        public async Task<string> addItemInPlaylist(string playlist_id, string id_brano)
+        public async Task<HttpResponseMessage> addItemInPlaylist(string playlist_id, string id_brano)
         {
+            HttpResponseMessage message;
             var NoToken = _context.Tokens.Count();
             if(NoToken <= 0)
             {
-               var redirectUri = AuthorizationCodeFlow.RequestUserAuth();
-               Redirect(redirectUri.Result.AbsolutePath);
+                 message = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
+                {
+                    ReasonPhrase = "Nessun token disponibile, visita il seguente endpoint:" +
+                    " api/Spotify/Auth"
+                };
+                return message;
             }
             var token = _context.Tokens.First<Token>();
             if (Token.isExpired(token))
             {
                 var tokenToDelete = new Token();
                 tokenToDelete = token;
+                var refresh_token = token.refresh_token;
                 token = await Token.refreshTokenMethod(token.refresh_token);
+                token.refresh_token = refresh_token;
                 _context.Tokens.Remove(tokenToDelete);
                 _context.Tokens.Add(token);
                 _context.SaveChanges();
@@ -51,7 +58,12 @@ namespace SpotifyWebApi.Controllers
                 var httpContent = new StringContent(stringpaylaod, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync($"https://api.spotify.com/v1/playlists/{playlist_id}/tracks", httpContent);
                 var responseString = await response.Content.ReadAsStringAsync();
-                return responseString;
+                message = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                {
+                    ReasonPhrase = "Aggiunta la canzone con successo"
+                    
+                };
+                return message;
             }
         }
 
@@ -59,12 +71,25 @@ namespace SpotifyWebApi.Controllers
         [Route("GetSongs")]
         public async Task<string> getItemsFromPlaylist(string playlist_id)
         {
+            HttpResponseMessage message;
+            var NoToken = _context.Tokens.Count();
+            if (NoToken <= 0)
+            {
+                message = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
+                {
+                    ReasonPhrase = "Nessun token disponibile, visita il seguente endpoint:" +
+                   " api/Spotify/Auth"
+                };
+                return message.ToString();
+            }
             var token = _context.Tokens.First<Token>();
             if (Token.isExpired(token))
             {
                 var tokenToDelete = new Token();
                 tokenToDelete = token;
+                var refresh_token = token.refresh_token;
                 token = await Token.refreshTokenMethod(token.refresh_token);
+                token.refresh_token = refresh_token;
                 _context.Tokens.Remove(tokenToDelete);
                 _context.Tokens.Add(token);
                 _context.SaveChanges();

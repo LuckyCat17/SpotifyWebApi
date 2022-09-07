@@ -1,4 +1,5 @@
-﻿using SpotifyWebApi.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using SpotifyWebApi.Models;
 using System.Net.Http;
 using System.Text.Json;
 
@@ -27,7 +28,6 @@ namespace SpotifyWebApi
                 }
             }
         }
-
 
     }
 }
