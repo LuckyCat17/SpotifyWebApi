@@ -17,15 +17,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-var locale = builder.Configuration["SiteLocale"];
-RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
-{
-};
-localizationOptions.SetDefaultCulture("en");
+//var locale = builder.Configuration["SiteLocale"];
+//RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
+//{
+//};
+//localizationOptions.SetDefaultCulture("en");
 
 
 var app = builder.Build();
-app.UseRequestLocalization(localizationOptions);
+//app.UseRequestLocalization(localizationOptions);
 
 
 
