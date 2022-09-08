@@ -17,13 +17,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-var locale = builder.Configuration["Sitelocale"];
+var locale = builder.Configuration["SiteLocale"];
 RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
 {
-    SupportedCultures = new List<CultureInfo> { new CultureInfo(locale) },
-    SupportedUICultures = new List<CultureInfo> { new CultureInfo(locale) },
-    DefaultRequestCulture = new RequestCulture(locale)
 };
+localizationOptions.SetDefaultCulture("en");
+
 
 var app = builder.Build();
 app.UseRequestLocalization(localizationOptions);
