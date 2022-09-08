@@ -28,10 +28,6 @@
       }
     }
   },
-  "AllowedHosts": "*",
-  "ConnectionStrings": {
-    "TokenConnStr": "Data Source=(LocalDb)\\LocalDB;Initial Catalog=master;Integrated Security=True"
-  },
     "runtimeOptions": {
       "configProperties": {
         "System.Globalization.Invariant": true
