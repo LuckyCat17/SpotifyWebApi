@@ -2,6 +2,8 @@ global using SpotifyWebApi.DBContext;
 global using Microsoft.EntityFrameworkCore;
 using SpotifyWebApi;
 using SpotifyWebApi.Controllers;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +17,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+var locale = builder.Configuration["Sitelocale"];
+RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
+{
+    SupportedCultures = new List<CultureInfo> { new CultureInfo(locale) },
+    SupportedUICultures = new List<CultureInfo> { new CultureInfo(locale) },
+    DefaultRequestCulture = new RequestCulture(locale)
+};
 
 var app = builder.Build();
+app.UseRequestLocalization(localizationOptions);
 
 
 
