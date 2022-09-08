@@ -34,7 +34,7 @@
   },
     "runtimeOptions": {
       "configProperties": {
-        "System.Globalization.Invariant": false
+        "System.Globalization.Invariant": true
       }
     }
 }
