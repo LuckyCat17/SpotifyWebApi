@@ -22,7 +22,7 @@ namespace SpotifyWebApi.Models
 
         public Token()
         {
-            generated = new DateTime();
+            generated = DateTime.Now;
             is_expired = false;
         }
 
