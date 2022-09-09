@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
 
 namespace SpotifyWebApi.Models
 {
@@ -11,7 +10,7 @@ namespace SpotifyWebApi.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; } 
+        public int ID { get; set; }
         public string access_token { get; set; }
         public string token_type { get; set; }
         public string scope { get; set; }

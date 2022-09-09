@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SpotifyWebApi.Models;
+﻿using SpotifyWebApi.Models;
 
 namespace SpotifyWebApi.DBContext
 {

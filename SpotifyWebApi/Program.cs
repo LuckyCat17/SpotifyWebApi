@@ -1,9 +1,5 @@
-global using SpotifyWebApi.DBContext;
 global using Microsoft.EntityFrameworkCore;
-using SpotifyWebApi;
-using SpotifyWebApi.Controllers;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
+global using SpotifyWebApi.DBContext;
 
 internal class Program
 {
@@ -18,7 +14,6 @@ internal class Program
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-
 
         var app = builder.Build();
 

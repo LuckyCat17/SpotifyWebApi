@@ -1,5 +1,4 @@
-﻿using SpotifyWebApi.Models;
-using System.Text;
+﻿using System.Text;
 
 namespace SpotifyWebApi
 {

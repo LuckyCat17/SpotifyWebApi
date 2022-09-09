@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SpotifyWebApi.Models;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 
 namespace SpotifyWebApi.Controllers
 {
@@ -16,7 +14,7 @@ namespace SpotifyWebApi.Controllers
 
         public ValuesController(TokenDBContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
         [HttpPost]
@@ -25,12 +23,12 @@ namespace SpotifyWebApi.Controllers
         {
             HttpResponseMessage message;
             var NoToken = _context.Tokens.Count();
-            if(NoToken <= 0)
+            if (NoToken <= 0)
             {
-                 message = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
+                message = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized)
                 {
                     ReasonPhrase = "Nessun token disponibile, visita il seguente endpoint:" +
-                    " api/Spotify/Auth"
+                   " api/Spotify/Auth"
                 };
                 return message;
             }
@@ -61,7 +59,7 @@ namespace SpotifyWebApi.Controllers
                 message = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
                 {
                     ReasonPhrase = "Aggiunta la canzone con successo"
-                    
+
                 };
                 return message;
             }

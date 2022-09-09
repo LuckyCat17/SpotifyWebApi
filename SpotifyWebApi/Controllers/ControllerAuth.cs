@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SpotifyWebApi.DBContext;
 using SpotifyWebApi.Models;
 
 namespace SpotifyWebApi.Controllers
@@ -23,9 +22,9 @@ namespace SpotifyWebApi.Controllers
 
         [HttpGet]
         [Route("callback")]
-        public async Task <HttpResponseMessage> Index(string code, string state)
+        public async Task<HttpResponseMessage> Index(string code, string state)
         {
-            var token = await Token.getToken(Constants.grant_type,code,Constants.redirectUri);
+            var token = await Token.getToken(Constants.grant_type, code, Constants.redirectUri);
             _context.Tokens.Add(token);
             await _context.SaveChangesAsync();
             var message = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
