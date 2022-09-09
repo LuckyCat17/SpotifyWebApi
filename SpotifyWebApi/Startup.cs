@@ -1,7 +1,7 @@
 global using Microsoft.EntityFrameworkCore;
 global using SpotifyWebApi.DBContext;
 
-internal class Program
+internal class Startup
 {
     private static void Main(string[] args)
     {
