@@ -1,44 +1,49 @@
 global using Microsoft.EntityFrameworkCore;
 global using SpotifyWebApi.DBContext;
+using Autofac;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
-internal class Startup
-{
-    private static void Main(string[] args)
+
+    public class Startup
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-
-
-        builder.Services.AddDbContext<TokenDBContext>(options => options.UseSqlServer("Data Source = 104.198.162.41; Initial Catalog = SpotifyWebApi; User ID = provola12345; Password =vL88/6X@Z*9PMGT<"));
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(c =>
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" })
-        );
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        
+        public Startup(IConfiguration configuration)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("v1/swagger.json", "My API V1");
-            }
-            );
+            Configuration = configuration;
         }
 
-        app.UseHttpsRedirection();
+        public IConfiguration Configuration { get; }
 
-        app.UseAuthorization();
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers();
 
-        app.MapControllers();
+            services.AddSwaggerGen();
+        }
 
-        app.Run();
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // builder.RegisterModule(new YourAutofacModule());
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseStaticFiles();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            app.UseSwaggerUI();
+        }
     }
-}
