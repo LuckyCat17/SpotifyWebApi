@@ -54,8 +54,8 @@ jobs:
       uses: ./.github/workflows/SpotifyWebApi20220909031427.yml
       with: # Set Azure credentials secret as an input
        credentials: ${{ secrets.AZURE_CREDENTIALS }}
-    env: # Or as an environment variable
-      credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      env: # Or as an environment variable
+       credentials: ${{ secrets.AZURE_CREDENTIALS }}
   deploy:
     runs-on: windows-latest
     needs: build
