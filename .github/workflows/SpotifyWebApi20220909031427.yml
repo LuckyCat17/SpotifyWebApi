@@ -50,6 +50,12 @@ jobs:
       with:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: Sample Azure action
+      with: # Set Azure credentials secret as an input
+       credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    env: # Or as an environment variable
+      credentials: ${{ secrets.AZURE_CREDENTIALS }}
   deploy:
     runs-on: windows-latest
     needs: build
