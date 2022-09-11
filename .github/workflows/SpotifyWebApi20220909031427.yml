@@ -51,7 +51,7 @@ jobs:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
     - name: Sample Azure action
-      uses: google-github-actions/setup-gcloud@v0
+      uses: ./.github/workflows/SpotifyWebApi20220909031427.yml
       with: # Set Azure credentials secret as an input
        credentials: ${{ secrets.AZURE_CREDENTIALS }}
     env: # Or as an environment variable
