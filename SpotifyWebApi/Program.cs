@@ -1,43 +1,43 @@
-﻿using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting;
+﻿global using SpotifyWebApi.DBContext;
+global using Microsoft.EntityFrameworkCore;
+using SpotifyWebApi;
+using SpotifyWebApi.Controllers;
 
 namespace SpotifyWebApi
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-
+        public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container.
+
+
+            builder.Services.AddDbContext<TokenDBContext>(options => options.UseSqlServer("Data Source = 104.198.162.41; Initial Catalog = SpotifyWebApi; User ID = provola12345; Password =vL88/6X@Z*9PMGT<"));
             builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
-            if (!app.Environment.IsDevelopment())
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 
-            app.MapRazorPages();
+            app.MapControllers();
 
             app.Run();
         }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return Host.CreateDefaultBuilder(args)
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureWebHostDefaults(webHostBuilder => webHostBuilder.UseStartup<Startup>());
-        }
     }
 }
+    
+        
+
